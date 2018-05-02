@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Baking App</string>
+    <string name="recipe_steps_button_text">Recipe Steps</string>
+    <string name="ingredient_format">%1$.2f %2$s of %3$s</string>
+    <string name="recipe_ingredients_button_text">Back to Ingredients</string>
 </resources>

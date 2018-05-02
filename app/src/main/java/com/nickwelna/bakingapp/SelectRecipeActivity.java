@@ -1,5 +1,6 @@
 package com.nickwelna.bakingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.nickwelna.bakingapp.RecipeAdapter.RecipeOnClickHandler;
 import com.nickwelna.bakingapp.models.Recipe;
 
 import java.io.IOException;
@@ -22,7 +24,7 @@ import okhttp3.ResponseBody;
 import timber.log.Timber;
 import timber.log.Timber.DebugTree;
 
-public class SelectRecipeActivity extends AppCompatActivity {
+public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnClickHandler {
 
     @BindView(R.id.recipe_recycler_view)
     RecyclerView recipeRecyclerView;
@@ -45,7 +47,7 @@ public class SelectRecipeActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recipeRecyclerView.setLayoutManager(layoutManager);
 
-        final RecipeAdapter adapter = new RecipeAdapter();
+        final RecipeAdapter adapter = new RecipeAdapter(this);
         recipeRecyclerView.setAdapter(adapter);
 
         Request request = new Request.Builder().url("https://d17h27t6h515a5.cloudfront" +
@@ -102,6 +104,17 @@ public class SelectRecipeActivity extends AppCompatActivity {
             }
 
         });
+
+    }
+
+    @Override
+    public void onClick(Recipe recipe) {
+
+        Intent intent = new Intent(this, RecipeActivity.class);
+        Bundle extras = new Bundle();
+        extras.putParcelable("Recipe", recipe);
+        intent.putExtras(extras);
+        startActivity(intent);
 
     }
 
