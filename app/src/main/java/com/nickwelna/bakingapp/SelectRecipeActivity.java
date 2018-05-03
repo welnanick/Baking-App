@@ -1,9 +1,11 @@
 package com.nickwelna.bakingapp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -44,8 +46,20 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
 
         }
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recipeRecyclerView.setLayoutManager(layoutManager);
+        if (getResources().getBoolean(R.bool.isTablet)) {
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+            recipeRecyclerView.setLayoutManager(layoutManager);
+
+
+        }
+        else {
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recipeRecyclerView.setLayoutManager(layoutManager);
+
+        }
 
         final RecipeAdapter adapter = new RecipeAdapter(this);
         recipeRecyclerView.setAdapter(adapter);
@@ -118,4 +132,12 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
 
     }
 
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+
+    }
+    
 }

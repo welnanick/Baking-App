@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -19,6 +20,13 @@ import butterknife.ButterKnife;
 class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
 
     private List<Step> steps;
+    StepSelectedListener stepSelectedListener;
+
+    public StepAdapter(StepSelectedListener stepSelectedListener) {
+
+        this.stepSelectedListener = stepSelectedListener;
+
+    }
 
     public void setSteps(List<Step> steps) {
 
@@ -59,7 +67,7 @@ class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
         }
     }
 
-    public class StepViewHolder extends RecyclerView.ViewHolder {
+    public class StepViewHolder extends RecyclerView.ViewHolder implements OnClickListener{
 
         @BindView(R.id.step_text_view)
         TextView stepTextView;
@@ -69,6 +77,7 @@ class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
             this.context = context;
 
         }
@@ -78,6 +87,19 @@ class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
             stepTextView.setText(step.getShortDescription());
 
         }
+
+        @Override
+        public void onClick(View v) {
+
+            stepSelectedListener.onStepSelected(getAdapterPosition());
+
+        }
+
+    }
+
+    public interface StepSelectedListener {
+
+        void onStepSelected(int step);
 
     }
 

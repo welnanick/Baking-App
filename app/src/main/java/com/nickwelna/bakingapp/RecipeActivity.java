@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import com.nickwelna.bakingapp.models.Recipe;
 
@@ -22,7 +19,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         Bundle extras = intent.getExtras();
 
-        if (extras != null) {
+        if (savedInstanceState == null && extras != null) {
 
             final Recipe recipe = extras.getParcelable("Recipe");
 
@@ -34,8 +31,8 @@ public class RecipeActivity extends AppCompatActivity {
 
             ingredientsFragment.setArguments(arguments);
 
-            fragmentManager.beginTransaction().add(R.id.fragment_holder, ingredientsFragment).commit();
-
+            fragmentManager.beginTransaction().add(R.id.fragment_holder, ingredientsFragment)
+                           .commit();
 
         }
 

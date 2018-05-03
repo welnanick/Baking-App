@@ -26,6 +26,12 @@ public class Step implements Parcelable {
         return videoURL;
     }
 
+    public int getId() {
+
+        return id;
+
+    }
+
     @Override
     public int describeContents() {
 

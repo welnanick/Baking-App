@@ -12,12 +12,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.nickwelna.bakingapp.StepAdapter.StepSelectedListener;
 import com.nickwelna.bakingapp.models.Recipe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeStepsFragment extends Fragment implements OnClickListener {
+public class RecipeStepsFragment extends Fragment implements OnClickListener, StepSelectedListener {
 
     Recipe recipe;
     @BindView(R.id.steps_recycler_view)
@@ -51,7 +52,7 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         stepsRecyclerView.setLayoutManager(layoutManager);
 
-        final StepAdapter adapter = new StepAdapter();
+        final StepAdapter adapter = new StepAdapter(this);
         stepsRecyclerView.setAdapter(adapter);
 
         adapter.setSteps(recipe.getSteps());
@@ -66,6 +67,22 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
 
         getActivity().onBackPressed();
+
+    }
+
+    @Override
+    public void onStepSelected(int step) {
+
+        StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
+
+        Bundle arguments = new Bundle();
+        arguments.putParcelableArrayList("steps", recipe.getSteps());
+        arguments.putInt("current_step", step);
+        arguments.putInt("number_of_steps", recipe.getSteps().size());
+
+        stepDetailsFragment.setArguments(arguments);
+
+        getFragmentManager().beginTransaction().replace(R.id.fragment_holder, stepDetailsFragment).addToBackStack( "tag" ).commit();
 
     }
 
