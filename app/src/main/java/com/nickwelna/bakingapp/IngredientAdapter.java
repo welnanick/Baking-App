@@ -35,6 +35,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientViewHolder
         View view = inflater.inflate(R.layout.ingredient_list_item, parent, false);
 
         return new IngredientViewHolder(view, parent.getContext());
+
     }
 
     @Override
@@ -57,13 +58,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientViewHolder
             return ingredients.size();
 
         }
+
     }
 
     public class IngredientViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ingredient_name_text_view)
         TextView ingredientNameTextView;
-
         Context context;
 
         public IngredientViewHolder(View itemView, Context context) {
@@ -79,11 +80,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientViewHolder
             double quantity = ingredient.getQuantity();
             String measurement = ingredient.getMeasure().toLowerCase();
 
-            String ingredientString = context.getString(R.string.ingredient_format, quantity, measurement, ingredient.getIngredient());
+            String ingredientString =
+                    context.getString(R.string.ingredient_format, quantity, measurement,
+                            ingredient.getIngredient());
             ingredientNameTextView.setText(ingredientString);
 
         }
-
 
     }
 

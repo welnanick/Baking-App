@@ -60,9 +60,9 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
-            steps = getArguments().getParcelableArrayList("steps");
-            numberOfSteps = getArguments().getInt("number_of_steps");
-            currentStep = getArguments().getInt("current_step");
+            steps = getArguments().getParcelableArrayList(getString(R.string.recipe_steps_key));
+            numberOfSteps = getArguments().getInt(getString(R.string.number_of_steps_key));
+            currentStep = getArguments().getInt(getString(R.string.current_step_key));
 
         }
 
@@ -86,7 +86,7 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             }
             else {
 
-                long position = savedInstanceState.getLong("video_position");
+                long position = savedInstanceState.getLong(getString(R.string.video_position_key));
                 initializePlayer(videoUri, position);
 
             }
@@ -140,6 +140,7 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
         }
 
         return rootView;
+
     }
 
     private void initializePlayer(String uriString, long position) {
@@ -208,7 +209,7 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
     public void onSaveInstanceState(@NonNull Bundle outState) {
 
         super.onSaveInstanceState(outState);
-        outState.putLong("video_position", exoPlayer.getContentPosition());
+        outState.putLong(getString(R.string.video_position_key), exoPlayer.getContentPosition());
 
     }
 
@@ -220,15 +221,15 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
 
             Bundle arguments = new Bundle();
-            arguments.putParcelableArrayList("steps", steps);
-            arguments.putInt("current_step", currentStep - 1);
-            arguments.putInt("number_of_steps", numberOfSteps);
+            arguments.putParcelableArrayList(getString(R.string.recipe_steps_key), steps);
+            arguments.putInt(getString(R.string.current_step_key), currentStep - 1);
+            arguments.putInt(getString(R.string.number_of_steps_key), numberOfSteps);
 
             stepDetailsFragment.setArguments(arguments);
 
             getFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_holder, stepDetailsFragment)
-                                .addToBackStack("tag").commit();
+                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
 
         }
         else if (v.equals(nextStepButton)) {
@@ -236,15 +237,15 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
 
             Bundle arguments = new Bundle();
-            arguments.putParcelableArrayList("steps", steps);
-            arguments.putInt("current_step", currentStep + 1);
-            arguments.putInt("number_of_steps", numberOfSteps);
+            arguments.putParcelableArrayList(getString(R.string.recipe_steps_key), steps);
+            arguments.putInt(getString(R.string.current_step_key), currentStep + 1);
+            arguments.putInt(getString(R.string.number_of_steps_key), numberOfSteps);
 
             stepDetailsFragment.setArguments(arguments);
 
             getFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_holder, stepDetailsFragment)
-                                .addToBackStack("tag").commit();
+                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
 
         }
 

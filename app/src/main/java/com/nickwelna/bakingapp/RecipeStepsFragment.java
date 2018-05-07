@@ -36,7 +36,7 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener, St
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
-            recipe = getArguments().getParcelable("recipe");
+            recipe = getArguments().getParcelable(getString(R.string.recipe_key));
 
         }
 
@@ -76,13 +76,13 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener, St
         StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
 
         Bundle arguments = new Bundle();
-        arguments.putParcelableArrayList("steps", recipe.getSteps());
-        arguments.putInt("current_step", step);
-        arguments.putInt("number_of_steps", recipe.getSteps().size());
+        arguments.putParcelableArrayList(getString(R.string.recipe_steps_key), recipe.getSteps());
+        arguments.putInt(getString(R.string.current_step_key), step);
+        arguments.putInt(getString(R.string.number_of_steps_key), recipe.getSteps().size());
 
         stepDetailsFragment.setArguments(arguments);
 
-        if (getActivity().getResources().getBoolean(R.bool.isTablet)){
+        if (getActivity().getResources().getBoolean(R.bool.isTablet)) {
 
             getFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_holder_2, stepDetailsFragment).commit();
@@ -91,7 +91,8 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener, St
         else {
 
             getFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_holder, stepDetailsFragment).addToBackStack("tag").commit();
+                                .replace(R.id.fragment_holder, stepDetailsFragment)
+                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
 
         }
 

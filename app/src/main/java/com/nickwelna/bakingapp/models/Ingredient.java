@@ -12,6 +12,7 @@ public class Ingredient implements Parcelable {
     public String getIngredient() {
 
         return ingredient;
+
     }
 
     public double getQuantity() {

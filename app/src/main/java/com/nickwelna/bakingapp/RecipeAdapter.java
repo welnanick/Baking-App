@@ -14,7 +14,7 @@ import com.nickwelna.bakingapp.models.Recipe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder>{
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     private Recipe[] recipes;
     private RecipeOnClickHandler onClickHandler;

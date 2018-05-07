@@ -43,6 +43,7 @@ class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
         View view = inflater.inflate(R.layout.step_list_item, parent, false);
 
         return new StepViewHolder(view, parent.getContext());
+
     }
 
     @Override
@@ -65,9 +66,10 @@ class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
             return steps.size();
 
         }
+
     }
 
-    public class StepViewHolder extends RecyclerView.ViewHolder implements OnClickListener{
+    public class StepViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
         @BindView(R.id.step_text_view)
         TextView stepTextView;

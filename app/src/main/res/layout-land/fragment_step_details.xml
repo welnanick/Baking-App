@@ -14,6 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:resize_mode="fixed_width" />
+        app:resize_mode="fit" />
 
 </android.support.constraint.ConstraintLayout>

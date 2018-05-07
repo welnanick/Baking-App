@@ -21,6 +21,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
@@ -30,7 +31,6 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
 
     @BindView(R.id.recipe_recycler_view)
     RecyclerView recipeRecyclerView;
-
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -52,7 +52,6 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
             GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
             recipeRecyclerView.setLayoutManager(layoutManager);
 
-
         }
         else {
 
@@ -64,15 +63,14 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
         final RecipeAdapter adapter = new RecipeAdapter(this);
         recipeRecyclerView.setAdapter(adapter);
 
-        Request request = new Request.Builder().url("https://d17h27t6h515a5.cloudfront" +
-                ".net/topher/2017/May/59121517_baking/baking.json").build();
+        Request request = new Builder().url(getString(R.string.recipe_json_url)).build();
 
         client.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
 
-                e.printStackTrace();
+                Timber.e(e);
 
             }
 
@@ -126,7 +124,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
 
         Intent intent = new Intent(this, RecipeActivity.class);
         Bundle extras = new Bundle();
-        extras.putParcelable("Recipe", recipe);
+        extras.putParcelable(getString(R.string.recipe_key), recipe);
         intent.putExtras(extras);
         startActivity(intent);
 
