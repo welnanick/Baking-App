@@ -97,41 +97,45 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             stepVideo.setVisibility(View.GONE);
 
         }
-
         if (getActivity().getResources().getConfiguration().orientation ==
-                Configuration.ORIENTATION_PORTRAIT) {
-
-            descriptionTextView.setText(steps.get(currentStep).getDescription());
-
-            if (steps.get(currentStep).getId() == 0) {
-
-                previousStepButton.setEnabled(false);
-
-            }
-            else {
-
-                previousStepButton.setOnClickListener(this);
-
-            }
-
-            if (steps.get(currentStep).getId() < numberOfSteps - 1) {
-
-                nextStepButton.setOnClickListener(this);
-
-            }
-            else {
-
-                nextStepButton.setEnabled(false);
-
-            }
-
-        }
-        else {
+                Configuration.ORIENTATION_LANDSCAPE &&
+                !getActivity().getResources().getBoolean(R.bool.isTablet)) {
 
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
             getActivity().getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+        }
+        else {
+
+            descriptionTextView.setText(steps.get(currentStep).getDescription());
+
+            if (!getActivity().getResources().getBoolean(R.bool.isTablet)) {
+
+                if (steps.get(currentStep).getId() == 0) {
+
+                    previousStepButton.setEnabled(false);
+
+                }
+                else {
+
+                    previousStepButton.setOnClickListener(this);
+
+                }
+
+                if (steps.get(currentStep).getId() < numberOfSteps - 1) {
+
+                    nextStepButton.setOnClickListener(this);
+
+                }
+                else {
+
+                    nextStepButton.setEnabled(false);
+
+                }
+
+            }
 
         }
 
@@ -205,7 +209,6 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
 
         super.onSaveInstanceState(outState);
         outState.putLong("video_position", exoPlayer.getContentPosition());
-
 
     }
 

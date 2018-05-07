@@ -1,6 +1,7 @@
 package com.nickwelna.bakingapp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,12 @@ public class RecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         Bundle extras = intent.getExtras();
+
+        if (getResources().getBoolean(R.bool.isTablet)) {
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        }
 
         if (savedInstanceState == null && extras != null) {
 

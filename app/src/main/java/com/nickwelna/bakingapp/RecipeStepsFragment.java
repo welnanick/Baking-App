@@ -82,7 +82,18 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener, St
 
         stepDetailsFragment.setArguments(arguments);
 
-        getFragmentManager().beginTransaction().replace(R.id.fragment_holder, stepDetailsFragment).addToBackStack( "tag" ).commit();
+        if (getActivity().getResources().getBoolean(R.bool.isTablet)){
+
+            getFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_holder_2, stepDetailsFragment).commit();
+
+        }
+        else {
+
+            getFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_holder, stepDetailsFragment).addToBackStack("tag").commit();
+
+        }
 
     }
 

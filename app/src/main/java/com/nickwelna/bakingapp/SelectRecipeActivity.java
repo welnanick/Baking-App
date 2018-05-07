@@ -139,5 +139,5 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
     }
-    
+
 }
