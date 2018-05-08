@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.nickwelna.bakingapp.RecipeAdapter.RecipeOnClickHandler;
+import com.nickwelna.bakingapp.idlingResource.SimpleIdlingResource;
 import com.nickwelna.bakingapp.models.Recipe;
 
 import java.io.IOException;
@@ -32,6 +36,21 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
     @BindView(R.id.recipe_recycler_view)
     RecyclerView recipeRecyclerView;
     private final OkHttpClient client = new OkHttpClient();
+    @Nullable
+    private SimpleIdlingResource idlingResource;
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+
+        if (idlingResource == null) {
+
+            idlingResource = new SimpleIdlingResource();
+
+        }
+        return idlingResource;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +58,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_recipe);
         ButterKnife.bind(this);
+        getIdlingResource();
 
         if (BuildConfig.DEBUG) {
 
@@ -65,12 +85,23 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
 
         Request request = new Builder().url(getString(R.string.recipe_json_url)).build();
 
+        if (idlingResource != null) {
+
+            idlingResource.setIdleState(false);
+
+        }
+
         client.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
 
                 Timber.e(e);
+                if (idlingResource != null) {
+
+                    idlingResource.setIdleState(true);
+
+                }
 
             }
 
@@ -99,6 +130,11 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
                             public void run() {
 
                                 adapter.setRecipes(recipes);
+                                if (idlingResource != null) {
+
+                                    idlingResource.setIdleState(true);
+
+                                }
 
                             }
 
@@ -108,6 +144,12 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
                     catch (IOException e) {
 
                         Timber.e(e);
+
+                        if (idlingResource != null) {
+
+                            idlingResource.setIdleState(true);
+
+                        }
 
                     }
 
