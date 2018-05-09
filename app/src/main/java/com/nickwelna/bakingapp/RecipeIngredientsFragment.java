@@ -1,6 +1,11 @@
 package com.nickwelna.bakingapp;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.gson.Gson;
 import com.nickwelna.bakingapp.models.Recipe;
 
 import butterknife.BindView;
@@ -24,6 +30,9 @@ public class RecipeIngredientsFragment extends Fragment implements OnClickListen
     RecyclerView ingredientsRecyclerView;
     @BindView(R.id.recipe_steps_button)
     public Button recipeStepsButton;
+    @BindView(R.id.display_in_widget)
+    public Button displayInWidget;
+    public static final String PREFERENCE_KEY = "ingredients_list";
 
     public RecipeIngredientsFragment() {
 
@@ -57,6 +66,7 @@ public class RecipeIngredientsFragment extends Fragment implements OnClickListen
         adapter.setIngredients(recipe.getIngredients());
 
         recipeStepsButton.setOnClickListener(this);
+        displayInWidget.setOnClickListener(this);
 
         return rootView;
 
@@ -65,15 +75,36 @@ public class RecipeIngredientsFragment extends Fragment implements OnClickListen
     @Override
     public void onClick(View v) {
 
-        RecipeStepsFragment stepsFragment = new RecipeStepsFragment();
+        if (v.equals(recipeStepsButton)) {
 
-        Bundle arguments = new Bundle();
-        arguments.putParcelable(getString(R.string.recipe_key), recipe);
+            RecipeStepsFragment stepsFragment = new RecipeStepsFragment();
 
-        stepsFragment.setArguments(arguments);
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(getString(R.string.recipe_key), recipe);
 
-        getFragmentManager().beginTransaction().replace(R.id.fragment_holder, stepsFragment)
-                            .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+            stepsFragment.setArguments(arguments);
+
+            getFragmentManager().beginTransaction().replace(R.id.fragment_holder, stepsFragment)
+                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+
+        }
+        else if (v.equals(displayInWidget)) {
+
+            Gson gson = new Gson();
+
+            String ingredients = gson.toJson(recipe.getIngredients());
+            SharedPreferences sharedPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(getContext());
+            Editor editor = sharedPreferences.edit();
+            editor.putString(PREFERENCE_KEY, ingredients);
+            editor.apply();
+
+            int[] ids = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(
+                    new ComponentName(getContext(), IngredientListWidget.class));
+            AppWidgetManager.getInstance(getContext())
+                            .notifyAppWidgetViewDataChanged(ids, R.id.widget_list_view);
+
+        }
 
     }
 

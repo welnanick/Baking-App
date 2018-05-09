@@ -22,7 +22,21 @@
         android:layout_marginStart="@dimen/horizontal_padding_normal"
         android:text="@string/recipe_steps_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/display_in_widget"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/display_in_widget"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vertical_padding_normal"
+        android:layout_marginEnd="@dimen/horizontal_padding_normal"
+        android:layout_marginStart="@dimen/horizontal_padding_normal"
+        android:text="@string/display_in_widget_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/recipe_steps_button" />
 
 </android.support.constraint.ConstraintLayout>
