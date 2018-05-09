@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 
 public class RecipeStepsFragment extends Fragment implements OnClickListener, StepSelectedListener {
 
-    Recipe recipe;
+    private Recipe recipe;
     @BindView(R.id.steps_recycler_view)
     RecyclerView stepsRecyclerView;
     @BindView(R.id.recipe_ingredients_button)
@@ -66,7 +66,11 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener, St
     @Override
     public void onClick(View v) {
 
-        getActivity().onBackPressed();
+        if (getActivity() != null) {
+
+            getActivity().onBackPressed();
+
+        }
 
     }
 
@@ -81,18 +85,25 @@ public class RecipeStepsFragment extends Fragment implements OnClickListener, St
         arguments.putInt(getString(R.string.number_of_steps_key), recipe.getSteps().size());
 
         stepDetailsFragment.setArguments(arguments);
+        if (getResources().getBoolean(R.bool.isTablet)) {
 
-        if (getActivity().getResources().getBoolean(R.bool.isTablet)) {
+            if (getFragmentManager() != null) {
 
-            getFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_holder_2, stepDetailsFragment).commit();
+                getFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_holder_2, stepDetailsFragment).commit();
+
+            }
 
         }
         else {
 
-            getFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_holder, stepDetailsFragment)
-                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+            if (getFragmentManager() != null) {
+
+                getFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_holder, stepDetailsFragment)
+                                    .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+
+            }
 
         }
 

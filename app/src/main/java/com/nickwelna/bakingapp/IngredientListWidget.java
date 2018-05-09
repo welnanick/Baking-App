@@ -29,8 +29,8 @@ public class IngredientListWidget extends AppWidgetProvider {
 
     }
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
 
         RemoteViews views =
                 new RemoteViews(context.getPackageName(), R.layout.ingredient_list_widget);

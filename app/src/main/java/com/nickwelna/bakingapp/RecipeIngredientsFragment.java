@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class RecipeIngredientsFragment extends Fragment implements OnClickListener {
 
-    Recipe recipe;
+    private Recipe recipe;
     @BindView(R.id.ingredients_recycler_view)
     RecyclerView ingredientsRecyclerView;
     @BindView(R.id.recipe_steps_button)
@@ -84,8 +84,12 @@ public class RecipeIngredientsFragment extends Fragment implements OnClickListen
 
             stepsFragment.setArguments(arguments);
 
-            getFragmentManager().beginTransaction().replace(R.id.fragment_holder, stepsFragment)
-                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+            if (getFragmentManager() != null) {
+
+                getFragmentManager().beginTransaction().replace(R.id.fragment_holder, stepsFragment)
+                                    .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+
+            }
 
         }
         else if (v.equals(displayInWidget)) {
@@ -99,10 +103,14 @@ public class RecipeIngredientsFragment extends Fragment implements OnClickListen
             editor.putString(PREFERENCE_KEY, ingredients);
             editor.apply();
 
-            int[] ids = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(
-                    new ComponentName(getContext(), IngredientListWidget.class));
-            AppWidgetManager.getInstance(getContext())
-                            .notifyAppWidgetViewDataChanged(ids, R.id.widget_list_view);
+            if (getContext() != null) {
+
+                int[] ids = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(
+                        new ComponentName(getContext(), IngredientListWidget.class));
+                AppWidgetManager.getInstance(getContext())
+                                .notifyAppWidgetViewDataChanged(ids, R.id.widget_list_view);
+
+            }
 
         }
 

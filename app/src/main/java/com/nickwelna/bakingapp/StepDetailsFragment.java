@@ -38,10 +38,10 @@ import butterknife.ButterKnife;
  */
 public class StepDetailsFragment extends Fragment implements OnClickListener {
 
-    ArrayList<Step> steps;
-    int numberOfSteps;
-    int currentStep;
-    ExoPlayer exoPlayer;
+    private ArrayList<Step> steps;
+    private int numberOfSteps;
+    private int currentStep;
+    private ExoPlayer exoPlayer;
     @BindView(R.id.step_video)
     PlayerView stepVideo;
     @Nullable
@@ -86,8 +86,13 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             }
             else {
 
-                long position = savedInstanceState.getLong(getString(R.string.video_position_key));
-                initializePlayer(videoUri, position);
+                if (savedInstanceState.containsKey(getString(R.string.video_position_key))) {
+
+                    long position =
+                            savedInstanceState.getLong(getString(R.string.video_position_key));
+                    initializePlayer(videoUri, position);
+
+                }
 
             }
 
@@ -97,9 +102,8 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             stepVideo.setVisibility(View.GONE);
 
         }
-        if (getActivity().getResources().getConfiguration().orientation ==
-                Configuration.ORIENTATION_LANDSCAPE &&
-                !getActivity().getResources().getBoolean(R.bool.isTablet)) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE &&
+                !getResources().getBoolean(R.bool.isTablet)) {
 
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
             getActivity().getWindow().getDecorView().setSystemUiVisibility(
@@ -209,7 +213,12 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
     public void onSaveInstanceState(@NonNull Bundle outState) {
 
         super.onSaveInstanceState(outState);
-        outState.putLong(getString(R.string.video_position_key), exoPlayer.getContentPosition());
+        if (exoPlayer != null) {
+
+            outState.putLong(getString(R.string.video_position_key),
+                    exoPlayer.getContentPosition());
+
+        }
 
     }
 
@@ -227,9 +236,13 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
 
             stepDetailsFragment.setArguments(arguments);
 
-            getFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_holder, stepDetailsFragment)
-                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+            if (getFragmentManager() != null) {
+
+                getFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_holder, stepDetailsFragment)
+                                    .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+
+            }
 
         }
         else if (v.equals(nextStepButton)) {
@@ -243,9 +256,13 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
 
             stepDetailsFragment.setArguments(arguments);
 
-            getFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_holder, stepDetailsFragment)
-                                .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+            if (getFragmentManager() != null) {
+
+                getFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_holder, stepDetailsFragment)
+                                    .addToBackStack(getString(R.string.fragment_tag_key)).commit();
+
+            }
 
         }
 

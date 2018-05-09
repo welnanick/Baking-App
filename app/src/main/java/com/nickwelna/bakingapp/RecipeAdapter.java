@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     private Recipe[] recipes;
-    private RecipeOnClickHandler onClickHandler;
+    private final RecipeOnClickHandler onClickHandler;
 
     interface RecipeOnClickHandler {
 
@@ -74,7 +74,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
         @BindView(R.id.recipe_name)
         TextView recipeName;
 
-        public RecipeViewHolder(View itemView) {
+        RecipeViewHolder(View itemView) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);

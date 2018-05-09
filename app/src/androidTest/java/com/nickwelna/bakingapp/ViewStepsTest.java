@@ -22,7 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class ViewStepsTest {
 
     @Rule
-    public ActivityTestRule<SelectRecipeActivity> activityTestRule =
+    public final ActivityTestRule<SelectRecipeActivity> activityTestRule =
             new ActivityTestRule<>(SelectRecipeActivity.class);
     private IdlingResource idlingResource;
 

@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
 
     private List<Step> steps;
-    StepSelectedListener stepSelectedListener;
+    private final StepSelectedListener stepSelectedListener;
 
     public StepAdapter(StepSelectedListener stepSelectedListener) {
 
@@ -73,14 +73,12 @@ class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
 
         @BindView(R.id.step_text_view)
         TextView stepTextView;
-        Context context;
 
-        public StepViewHolder(View itemView, Context context) {
+        StepViewHolder(View itemView, Context context) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-            this.context = context;
 
         }
 

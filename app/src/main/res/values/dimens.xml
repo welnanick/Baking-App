@@ -3,5 +3,4 @@
     <dimen name="vertical_padding_normal">8dp</dimen>
     <dimen name="horizontal_padding_normal">8dp</dimen>
     <dimen name="horizontal_padding_small">4dp</dimen>
-    <dimen name="widget_margin">8dp</dimen>
 </resources>

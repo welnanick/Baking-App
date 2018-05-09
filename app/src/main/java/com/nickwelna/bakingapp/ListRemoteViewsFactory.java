@@ -15,10 +15,10 @@ import java.util.List;
 
 import static com.nickwelna.bakingapp.RecipeIngredientsFragment.PREFERENCE_KEY;
 
-public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    Context context;
-    List<Ingredient> ingredients;
+    private final Context context;
+    private List<Ingredient> ingredients;
 
     public ListRemoteViewsFactory(Context context) {
 
