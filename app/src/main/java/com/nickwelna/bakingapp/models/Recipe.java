@@ -32,6 +32,12 @@ public class Recipe implements Parcelable {
 
     }
 
+    public String getImage() {
+
+        return image;
+
+    }
+
     @Override
     public int describeContents() {
 
