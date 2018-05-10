@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nickwelna.bakingapp.IngredientAdapter.IngredientViewHolder;
+import com.nickwelna.bakingapp.R;
+import com.nickwelna.bakingapp.adapters.IngredientAdapter.IngredientViewHolder;
 import com.nickwelna.bakingapp.models.Ingredient;
 
 import java.util.List;

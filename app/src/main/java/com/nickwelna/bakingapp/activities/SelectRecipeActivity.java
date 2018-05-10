@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,7 +13,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.nickwelna.bakingapp.RecipeAdapter.RecipeOnClickHandler;
+import com.nickwelna.bakingapp.BuildConfig;
+import com.nickwelna.bakingapp.R;
+import com.nickwelna.bakingapp.adapters.RecipeAdapter;
+import com.nickwelna.bakingapp.adapters.RecipeAdapter.RecipeOnClickHandler;
 import com.nickwelna.bakingapp.idlingResource.SimpleIdlingResource;
 import com.nickwelna.bakingapp.models.Recipe;
 
@@ -58,6 +61,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_recipe);
         ButterKnife.bind(this);
+
         getIdlingResource();
 
         if (BuildConfig.DEBUG) {
@@ -68,7 +72,6 @@ public class SelectRecipeActivity extends AppCompatActivity implements RecipeOnC
 
         if (getResources().getBoolean(R.bool.isTablet)) {
 
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
             recipeRecyclerView.setLayoutManager(layoutManager);
 

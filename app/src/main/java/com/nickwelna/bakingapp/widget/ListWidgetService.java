@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.widget;
 
 import android.content.Intent;
 import android.widget.RemoteViewsService;

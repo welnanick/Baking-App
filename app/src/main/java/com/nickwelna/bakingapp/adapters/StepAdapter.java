@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,7 +9,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nickwelna.bakingapp.StepAdapter.StepViewHolder;
+import com.nickwelna.bakingapp.R;
+import com.nickwelna.bakingapp.adapters.StepAdapter.StepViewHolder;
 import com.nickwelna.bakingapp.models.Step;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
+public class StepAdapter extends RecyclerView.Adapter<StepViewHolder> {
 
     private List<Step> steps;
     private final StepSelectedListener stepSelectedListener;

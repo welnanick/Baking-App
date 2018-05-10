@@ -6,6 +6,8 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.nickwelna.bakingapp.activities.SelectRecipeActivity;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

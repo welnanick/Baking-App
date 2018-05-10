@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nickwelna.bakingapp.RecipeAdapter.RecipeViewHolder;
+import com.nickwelna.bakingapp.R;
+import com.nickwelna.bakingapp.adapters.RecipeAdapter.RecipeViewHolder;
 import com.nickwelna.bakingapp.models.Recipe;
 
 import butterknife.BindView;
@@ -19,7 +20,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
     private Recipe[] recipes;
     private final RecipeOnClickHandler onClickHandler;
 
-    interface RecipeOnClickHandler {
+    public interface RecipeOnClickHandler {
 
         void onClick(Recipe recipe);
 

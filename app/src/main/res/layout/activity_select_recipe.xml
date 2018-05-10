@@ -7,4 +7,4 @@
     android:clipToPadding="false"
     android:paddingBottom="@dimen/vertical_padding_normal"
     android:scrollbarStyle="outsideOverlay"
-    tools:context=".SelectRecipeActivity" />
+    tools:context=".activities.SelectRecipeActivity" />

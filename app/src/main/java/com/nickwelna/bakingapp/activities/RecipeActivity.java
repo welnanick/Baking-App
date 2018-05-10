@@ -1,11 +1,12 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.activities;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.nickwelna.bakingapp.R;
+import com.nickwelna.bakingapp.fragments.RecipeIngredientsFragment;
 import com.nickwelna.bakingapp.models.Recipe;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -15,12 +16,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-
-        if (getResources().getBoolean(R.bool.isTablet)) {
-
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();

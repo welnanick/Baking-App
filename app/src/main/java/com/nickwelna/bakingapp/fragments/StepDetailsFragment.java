@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.fragments;
 
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -26,12 +28,14 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.nickwelna.bakingapp.R;
 import com.nickwelna.bakingapp.models.Step;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,9 +46,10 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
     private int numberOfSteps;
     private int currentStep;
     private ExoPlayer exoPlayer;
+    private long backgroundPosition;
+    private boolean initialized;
     @BindView(R.id.step_video)
     PlayerView stepVideo;
-    @Nullable
     @BindView(R.id.description_text_view)
     TextView descriptionTextView;
     @Nullable
@@ -53,6 +58,9 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
     @Nullable
     @BindView(R.id.next_step_button)
     Button nextStepButton;
+    @Nullable
+    @BindView(R.id.thumbnail_image_view)
+    ImageView thumbnail;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,20 +89,24 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
 
             if (savedInstanceState == null) {
 
-                initializePlayer(videoUri, -1);
+                initializePlayer(videoUri, -1, true);
 
             }
             else {
 
-                if (savedInstanceState.containsKey(getString(R.string.video_position_key))) {
+                if (savedInstanceState.containsKey(getString(R.string.video_position_key)) &&
+                        savedInstanceState.containsKey(getString(R.string.paused_boolean_key))) {
 
                     long position =
                             savedInstanceState.getLong(getString(R.string.video_position_key));
-                    initializePlayer(videoUri, position);
+                    boolean paused =
+                            savedInstanceState.getBoolean(getString(R.string.paused_boolean_key));
+                    initializePlayer(videoUri, position, paused);
 
                 }
 
             }
+            initialized = true;
 
         }
         else {
@@ -102,13 +114,36 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             stepVideo.setVisibility(View.GONE);
 
         }
+
+        if (steps.get(currentStep).getThumbnailURL() != null &&
+                !TextUtils.isEmpty(steps.get(currentStep).getThumbnailURL())) {
+
+            if (!steps.get(currentStep).getThumbnailURL().contains(".mp4")) {
+
+                Glide.with(this).load(steps.get(currentStep).getThumbnailURL()).into(thumbnail);
+
+            }
+
+        }
+
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE &&
                 !getResources().getBoolean(R.bool.isTablet)) {
 
-            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            if (initialized) {
+
+                ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                descriptionTextView.setVisibility(View.GONE);
+
+            }
+            else {
+
+                descriptionTextView.setText(steps.get(currentStep).getDescription());
+                stepVideo.setVisibility(View.GONE);
+
+            }
 
         }
         else {
@@ -147,7 +182,7 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
 
     }
 
-    private void initializePlayer(String uriString, long position) {
+    private void initializePlayer(String uriString, long position, boolean paused) {
 
         TrackSelector trackSelector = new DefaultTrackSelector();
         LoadControl loadControl = new DefaultLoadControl();
@@ -168,7 +203,7 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             exoPlayer.seekTo(position);
 
         }
-        exoPlayer.setPlayWhenReady(true);
+        exoPlayer.setPlayWhenReady(paused);
 
     }
 
@@ -177,6 +212,7 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
      */
     private void releasePlayer() {
 
+        Timber.d("releasePlayer");
         if (exoPlayer != null) {
 
             exoPlayer.stop();
@@ -184,29 +220,41 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
             exoPlayer = null;
 
         }
+        initialized = false;
 
     }
 
-    /**
-     * Release Player when the view is destroyed.
-     */
     @Override
     public void onDestroyView() {
 
         super.onDestroyView();
+        Timber.d("onDestroy");
+        // We were instructed to release the player here in the lessons. Not in onStop.
+        initialized = false;
+
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
+        Timber.d("onStop");
+        backgroundPosition = exoPlayer.getContentPosition();
         releasePlayer();
 
     }
 
     @Override
-    public void onPause() {
+    public void onStart() {
 
-        super.onPause();
-        if (exoPlayer != null) {
+        super.onStart();
+        if (!initialized) {
 
-            exoPlayer.setPlayWhenReady(false);
+            initializePlayer(steps.get(currentStep).getVideoURL(), backgroundPosition, false);
+            initialized = true;
 
         }
+
     }
 
     @Override
@@ -217,6 +265,10 @@ public class StepDetailsFragment extends Fragment implements OnClickListener {
 
             outState.putLong(getString(R.string.video_position_key),
                     exoPlayer.getContentPosition());
+            outState.putBoolean(getString(R.string.paused_boolean_key),
+                    exoPlayer.getPlayWhenReady());
+            exoPlayer.setPlayWhenReady(false);
+            Timber.d("onSaveInstanceState");
 
         }
 

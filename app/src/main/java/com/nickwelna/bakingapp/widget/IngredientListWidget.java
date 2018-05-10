@@ -1,10 +1,12 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.nickwelna.bakingapp.R;
 
 public class IngredientListWidget extends AppWidgetProvider {
 

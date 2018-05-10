@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.fragments;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -18,7 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.gson.Gson;
+import com.nickwelna.bakingapp.R;
+import com.nickwelna.bakingapp.adapters.IngredientAdapter;
 import com.nickwelna.bakingapp.models.Recipe;
+import com.nickwelna.bakingapp.widget.IngredientListWidget;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

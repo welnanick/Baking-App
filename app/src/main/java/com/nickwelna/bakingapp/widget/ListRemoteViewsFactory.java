@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,12 +8,13 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.google.gson.Gson;
+import com.nickwelna.bakingapp.R;
 import com.nickwelna.bakingapp.models.Ingredient;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.nickwelna.bakingapp.RecipeIngredientsFragment.PREFERENCE_KEY;
+import static com.nickwelna.bakingapp.fragments.RecipeIngredientsFragment.PREFERENCE_KEY;
 
 class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 

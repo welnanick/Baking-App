@@ -1,4 +1,4 @@
-package com.nickwelna.bakingapp;
+package com.nickwelna.bakingapp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +12,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.nickwelna.bakingapp.StepAdapter.StepSelectedListener;
+import com.nickwelna.bakingapp.R;
+import com.nickwelna.bakingapp.adapters.StepAdapter;
+import com.nickwelna.bakingapp.adapters.StepAdapter.StepSelectedListener;
 import com.nickwelna.bakingapp.models.Recipe;
 
 import butterknife.BindView;

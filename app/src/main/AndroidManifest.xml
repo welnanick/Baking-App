@@ -12,19 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".ListWidgetService"
+            android:name=".widget.ListWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <activity android:name=".SelectRecipeActivity">
+        <activity
+            android:name=".activities.SelectRecipeActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeActivity" />
+        <activity
+            android:name=".activities.RecipeActivity"
+            android:configChanges="layoutDirection"
+            android:parentActivityName=".activities.SelectRecipeActivity" />
 
-        <receiver android:name=".IngredientListWidget">
+        <receiver android:name=".widget.IngredientListWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

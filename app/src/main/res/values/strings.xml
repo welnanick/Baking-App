@@ -18,4 +18,5 @@
     <string name="next_step_button_text">Next Step</string>
     <string name="display_in_widget_button_text">Display in Widget</string>
     <string name="no_recipe_selected_text">No Recipe Selected</string>
+    <string name="paused_boolean_key">is_paused</string>
 </resources>

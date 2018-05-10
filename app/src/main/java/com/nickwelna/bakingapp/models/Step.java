@@ -35,6 +35,12 @@ public class Step implements Parcelable {
 
     }
 
+    public String getThumbnailURL() {
+
+        return thumbnailURL;
+
+    }
+
     @Override
     public int describeContents() {
 
